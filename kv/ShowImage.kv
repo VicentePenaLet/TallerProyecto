@@ -1,0 +1,9 @@
+BoxLayout:
+    orientation: 'vertical'
+    FloatLayout:
+
+        MDRoundFlatIconButton:
+            text: "Open manager"
+            icon: "folder"
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            on_release: app.file_manager_open()
