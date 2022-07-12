@@ -4,7 +4,26 @@ import winsound
 import pyaudio
 # Speech to text function
 
-def SpeakText(command):
+
+class Speaker():
+    def __init__(self):
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate',150)
+        self.active = False
+
+    def speak(self, text):
+        self.active = True
+        self.engine.say(text)
+        self.engine.runAndWait()
+        self.active = False
+
+    def stop(self):
+        print("stoping")
+        self.engine.stop()
+        self.active = False
+
+
+def speaker(command):
      
     # Initialize the engine
     engine = pyttsx3.init()
@@ -12,7 +31,7 @@ def SpeakText(command):
     engine.say(command)
     engine.runAndWait()
 
-def detector_voz(keys):
+def listener(keys):
     detect = True
     while(detect):   
         print("Listening")
@@ -36,7 +55,7 @@ def detector_voz(keys):
                 if MyText in keys:
                     detect = False   
                 else: 
-                    SpeakText(f'No se reconoce este comando, las palabras claves son {",".join(keys)}')          
+                    speaker(f'No se reconoce este comando, las palabras claves son {",".join(keys)}')          
                 
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
@@ -56,4 +75,4 @@ if __name__=="__main__":
     p = pyaudio.PyAudio()
     for i in range(p.get_device_count()):
         print(p.get_device_info_by_index(i))
-    MyText=detector_voz(keys_inicio)
+    MyText=listener(keys_inicio)
