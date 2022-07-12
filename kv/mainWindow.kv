@@ -101,9 +101,17 @@ WindowManager:
                     on_release:
                         app.speaker_thread_allergies()
 
-        Button:
-            text: "Go Back"
-            on_release:
-                app.root.current = "main"
-                root.manager.transition.direction = "right"
+                Button:
+                    text: "Go Back"
+                    size: 120, 220
+                    on_release:
+                        app.root.current = "main"
+                        root.manager.transition.direction = "right"
+
+                MDFloatingActionButton:
+                    icon: "android"
+                    md_bg_color: app.theme_cls.primary_color
+                    on_release:
+                        app.listener_thread()
+
 

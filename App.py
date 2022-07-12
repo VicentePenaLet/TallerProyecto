@@ -19,7 +19,6 @@ Window.size = (300, 530)
 class MainWindow(Screen):
     pass
 
-
 class SecondWindow(Screen):
     pass
 
@@ -108,5 +107,21 @@ class Example(MDApp):
     def text_to_speech_allergies(self):
         self.speaker.speak(str(self.product["allergies"].iloc[0]))
 
+    def listener_thread(self):
+        p1 = Thread(target=self.listen)
+        p1.start()
+
+    def listen(self):
+        keys=['nombre', 'marca', "precio", "descripción", "ingredientes", "alergias"]
+        func_dict = {"nombre": self.speaker_thread_product,
+                     "marca": self.speaker_thread_brand,
+                     "precio": self.speaker_thread_price,
+                     "descripción": self.speaker_thread_description,
+                     "ingredientes": self.speaker_thread_ingredientes,
+                     "alergias": self.speaker_thread_allergies,
+        }
+        result = listener(keys)
+        print(result)
+        func_dict[result]()
 
 Example().run()

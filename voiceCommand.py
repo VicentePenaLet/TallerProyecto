@@ -32,6 +32,31 @@ def speaker(command):
     engine.runAndWait()
 
 def listener(keys):
+    winsound.Beep(440, 500)
+    detect = True
+    while(detect):
+        print("listening")
+        try:
+            r = sr.Recognizer()
+            with sr.Microphone(device_index = 4) as source2:
+                r.adjust_for_ambient_noise(source2, duration=0.2)
+                audio2 = r.listen(source2)
+                text = r.recognize_google(audio2,language="es-ES")
+                text = text.lower()
+                print(text)
+                if text in keys:
+                    detect = False   
+                else: 
+                    speaker(f'Intente Nuevamente')
+        except sr.RequestError as e:
+            print("Could not request results; {0}".format(e))
+            
+        except sr.UnknownValueError:
+            print("unknown error occured")
+    return text
+
+def listener1(keys):
+    winsound.Beep(440, 500)
     detect = True
     while(detect):   
         print("Listening")
@@ -53,9 +78,11 @@ def listener(keys):
                 if MyText[:2]=='no':
                     MyText='no'
                 if MyText in keys:
-                    detect = False   
+                    detect = False
+                    winsound.Beep(440, 500)   
                 else: 
-                    speaker(f'No se reconoce este comando, las palabras claves son {",".join(keys)}')          
+                    speaker(f'No se reconoce este comando, las palabras claves son {",".join(keys)}')
+                    winsound.Beep(440, 500)          
                 
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
