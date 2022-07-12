@@ -1,44 +1,109 @@
-MDBoxLayout:
-    orientation: 'vertical'
+WindowManager:
+    MainWindow:
+    SecondWindow:
 
-    MDToolbar:
-        id: progress_toolbar
-        title: 'Buscador de productos'
+<MainWindow>
+    name: "main"
+    MDBoxLayout:
+        orientation: 'vertical'
 
-    ScrollView:
-        MDGridLayout:
-            cols: 1
-            adaptive_height: True
-            spacing: (10, 15)
-            padding: [25, 25]
+        MDToolbar:
+            id: progress_toolbar
+            title: 'Buscador de productos'
 
-            MDLabel:
-                halign: 'center'
-                text: 'Upload Picture of Product'
+        ScrollView:
+            MDGridLayout:
+                cols: 1
+                adaptive_height: True
+                spacing: (10, 15)
+                padding: [25, 25]
 
-            MDCard:
-                ripple_behavior: True
-                orientation: 'vertical'
-                size_hint_y: None
-                size: 120, 220
-                elevation: 15
-                radius: 8
-                MDIconButton:
-                    icon: "camera-outline"
-                    user_font_size: "24sp"
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    on_release: app.file_chooser1()
-                Image:
-                    id: img1
-                    allow_stretch: True
-                    keep_ratio: False
-                    # size_hint_y: .5
+                MDLabel:
+                    halign: 'center'
+                    text: 'Upload Picture of Product'
 
-            MDRoundFlatIconButton:
-                id: hidden_button
-                text: "Look for Matches"
-                opacity: 0
-                disabled: True # To make sure it doesn't capture events accidentally
-                pos_hint: {'center_x': .5, 'center_y': .5}
-                on_release: app.look_for_matches()
+                MDCard:
+                    ripple_behavior: True
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    size: 120, 220
+                    elevation: 15
+                    radius: 8
+                    MDIconButton:
+                        icon: "camera-outline"
+                        user_font_size: "24sp"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        on_release: app.file_chooser1()
+                    Image:
+                        id: img1
+                        allow_stretch: True
+                        keep_ratio: False
+                        # size_hint_y: .5
+
+                MDRoundFlatIconButton:
+                    id: hidden_button
+                    text: "Look for Matches"
+                    opacity: 0
+                    disabled: True # To make sure it doesn't capture events accidentally
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    on_release: 
+                        app.root.current = "second"
+                        root.manager.transition.direction = "left"
+                        app.look_for_matches()
+
+
+<SecondWindow>:
+    name: "second"
+    MDBoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            MDList:
+                TwoLineListItem:
+                    id: Product
+                    text: "Nombre del Producto"
+                    secondary_text:
+                        """ """
+                    on_release:
+                        app.speaker_thread_product()
+                TwoLineListItem:
+                    id: Brand
+                    text: "Marca del Producto"
+                    secondary_text: 
+                        """ """
+                    on_release:
+                        app.speaker_thread_brand()
+                TwoLineListItem:
+                    id: Price
+                    text: "Precio del Producto"
+                    secondary_text:
+                        """ """
+                    on_release:
+                        app.speaker_thread_price()
+                TwoLineListItem:
+                    id: Description
+                    text: "Descripción del Producto"
+                    secondary_text:
+                        """ """
+                    on_release:
+                        app.speaker_thread_description()
+                TwoLineListItem:
+                    id: Ingredientes
+                    text: "Ingredientes"
+                    secondary_text:
+                        """ """
+                    on_release:
+                        app.speaker_thread_ingredientes()
+                TwoLineListItem:
+                    id: allergies
+                    text: "Alergias"
+                    secondary_text:
+                        """ """
+                    on_release:
+                        app.speaker_thread_allergies()
+
+        Button:
+            text: "Go Back"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
 
